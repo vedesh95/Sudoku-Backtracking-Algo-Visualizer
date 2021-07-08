@@ -70,7 +70,7 @@ function issafe(i,j,k,row,col,box){
     return 1;
 }
 function util(i,j,matrix,row,col,box){
-    console.log(i,j,matrix);
+    console.log(i,j);
     if(j==9) {i++;j=0;}
     if(i==9){
         printBoardOnWeb(matrix);
@@ -81,16 +81,16 @@ function util(i,j,matrix,row,col,box){
         if(f==1) {return 1;}
     }
     for(var k=1;k<=9;k++){
-        if(issafe(i,j,matrix,row,col,box)==1){
-            matrix[i][j]=1;
-            markit(i,j,matrix[i][j],1,row,col,box);
+        if(issafe(i,j,k,row,col,box)==1){
+            matrix[i][j]=k;
+            markit(i,j,k,1,row,col,box);
             var f=util(i,j+1,matrix,row,col,box);
             if(f==1) {return 1;}
             matrix[i][j]=0;
-            markit(i,j,matrix[i][j],0,row,col,box);
+            markit(i,j,k,0,row,col,box);
         }
     }
-
+    return 0;
 }
 function clickedSolve(e)
 {
@@ -106,6 +106,17 @@ function clickedSolve(e)
         }
     }
     var f=util(0,0,matrix,row,col,box);
+    console.log(matrix);
+    for(var i=0;i<9;i++){
+        for(var j=0;j<9;j++){
+            matrix[i][j]=0;
+        }
+    }
+    for(var i=0;i<9;i++){
+        for(var j=0;j<10;j++){
+            row[i][j]=0;col[i][j]=0;box[i][j]=0;
+        }
+    }
 }
 
 // Read value from web board to 2d array
@@ -121,16 +132,8 @@ function readValue()
             if(val!="") {matrix[i][j]=parseInt(val);}
         }
     }
-    for(var i=0;i<9;i++){
-        console.log(matrix[i],matrix);
-    }
-    console.log(matrix);
     return matrix;
 }
-
-
-
-
 
 function alertNoSolution()
 {
