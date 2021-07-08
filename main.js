@@ -3,27 +3,18 @@ const clear = document.querySelector("#clear");
 const grid = document.querySelector("#grid");
 
 let animationSpeed=30;
-document.getElementById("slow").onclick = function() {handlespeed("slow","medium","fast")};
-document.getElementById("medium").onclick = function() {handlespeed("medium","fast","slow")};
-document.getElementById("fast").onclick = function() {handlespeed("fast","slow","medium")};
-
-function handlespeed(type1,type2,type3) {
-    if(type1=="slow"){
-        animationSpeed=200;
-    }
-    if(type1=="medium"){
-        animationSpeed=30;
-    }
-    if(type1=="fast"){
-        animationSpeed=1;
-    }
-    var element = document.getElementById(type1);
-    element.classList.add("speedstyle");
-    var element = document.getElementById(type2);
-    element.classList.remove("speedstyle");
-    var element = document.getElementById(type3);
-    element.classList.remove("speedstyle");
-}
+document.getElementById("slow").onclick = function(){
+    animationSpeed=200;
+    document.getElementById("navbarDropdown").innerHTML = "Slow";
+};
+document.getElementById("medium").onclick = function(){
+    animationSpeed=30;
+    document.getElementById("navbarDropdown").innerHTML = "Medium";
+};
+document.getElementById("fast").onclick = function(){
+    animationSpeed=1;
+    document.getElementById("navbarDropdown").innerHTML = "Fast";
+};
 
 clear.addEventListener('click', clickedClear);
 solve.addEventListener('click', clickedSolve);
@@ -93,7 +84,8 @@ function util(i,j,matrix,row,col,box,animatearray){
 /*helper function ends*/
 function clickedSolve(e)
 {
-    removeclicks();
+    var correctinp=removeclicks();
+    if(correctinp==0) {return;}
     let matrix=readValue();
     let row=makematrix();
     let col=makematrix();
