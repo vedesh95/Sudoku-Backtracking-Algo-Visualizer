@@ -90,16 +90,14 @@ function clickedSolve(e)
     let row=makematrix();
     let col=makematrix();
     let box=makematrix();
+    
     for(var i=0;i<9;i++){
         for(var j=0;j<9;j++){
             if(matrix[i][j]!=0){
                 if(issafe(i,j,matrix[i][j],row,col,box)==1){
                     markit(i,j,matrix[i][j],1,row,col,box);
                 }else{
-                    alertNoSolution();
-                    clearmatrix();
-                    setclicks();
-                    return;
+                    handleincorrect("No solution!! Please enter a valid sequence");return;     
                 }
             }
         }
@@ -158,6 +156,11 @@ function setclicks(){
     clear.addEventListener('click', clickedClear);
 }
 
+function handleincorrect(message){
+    alertNoSolution(message);
+    clearmatrix();
+    setclicks();
+}
 // Read value from web board to 2d array
 function readValue()
 {   
@@ -166,16 +169,22 @@ function readValue()
         matrix[i] = new Array(9);
         for(let j = 0; j < 9; j++){
             var val = grid.rows[i].cells[j].firstChild.value;
-            if(val!="") {matrix[i][j]=parseInt(val);}
-            else {matrix[i][j]=0;}
+            if(val=='' || val=='1' || val=='2' || val=='3' || val=='4' || val=='5' || val=='6' || val=='7' || val=='8' || val=='9'){
+                if(val!="") {matrix[i][j]=parseInt(val);}
+                else {matrix[i][j]=0;}
+            }else{
+                handleincorrect("Please enter a valid input!");
+                return;
+            }
+            
         }
     }
     return matrix;
 }
 
-function alertNoSolution()
+function alertNoSolution(message)
 {
-    alert("No Solution!");
+    alert(message);
 }
 
 function printBoardOnWeb(matrix){
