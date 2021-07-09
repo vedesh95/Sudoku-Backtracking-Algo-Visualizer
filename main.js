@@ -134,7 +134,22 @@ function animatearrayhelper(animatearray,ii){
         var i = animatearray[ii][0];
         var j = animatearray[ii][1];
         var val = animatearray[ii][2];
-        grid.rows[i].cells[j].firstChild.value=val;
+        grid.rows[i].cells[j].firstChild.value=val; 
+        for(var ni=i;ni<10;ni++){
+            for(var nj=j+1;nj<10;nj++){
+                for(var l=0;l<animatearray.length;l++){
+                    if(animatearray[l][0]==ni && animatearray[l][1]==nj){
+                        const date = Date.now();
+                        let currentDate = null;
+                        do {
+                            currentDate = Date.now();
+                        } while (currentDate - date < 0.5);
+                        grid.rows[ni].cells[nj].firstChild.value='';
+                    }
+                }         
+            }
+        }
+
         const date = Date.now();
         let currentDate = null;
         do {
